@@ -1,5 +1,5 @@
 /*
- * LingPipe v. 4.1.0
+ * !LingPipe v. 4.1.0
  * Copyright (C) 2003-2011 Alias-i
  *
  * This program is licensed under the Alias-i Royalty Free License
