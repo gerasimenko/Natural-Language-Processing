@@ -1,0 +1,1 @@
+tr "A-Z" "a-z" < au.txt | tr -sc "A-Za-z" "\n" | sort | uniq -c | sort -n -r | wc -l 
