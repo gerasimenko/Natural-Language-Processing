@@ -147,7 +147,7 @@ public class Submit {
 
 
   protected String output(int partId, String ch_aux) {
-    HolbrookCorpus trainCorpus = new HolbrookCorpus("data/holbrook-tagged-train.dat");
+    HolbrookCorpus trainCorpus = new HolbrookCorpus("src/data/holbrook-tagged-train.dat");
     HolbrookCorpus testCorpus = new HolbrookCorpus();
     testCorpus.slurpString(ch_aux); 
     LanguageModel lm; 

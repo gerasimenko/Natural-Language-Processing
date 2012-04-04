@@ -7,13 +7,13 @@ public class SpellCorrect {
   LanguageModel languageModel;
 
   public SpellCorrect() {
-    HolbrookCorpus corpus = new HolbrookCorpus("data/holbrook-tagged-train.dat");
-    editModel = new EditModel("data/count_1edit.txt", corpus);
+    HolbrookCorpus corpus = new HolbrookCorpus("/src/data/holbrook-tagged-train.dat");
+    editModel = new EditModel("src/data/count_1edit.txt", corpus);
     languageModel = null;
   }
 
   public SpellCorrect(LanguageModel lm, HolbrookCorpus corpus) {
-    editModel = new EditModel("data/count_1edit.txt", corpus);
+    editModel = new EditModel("src/data/count_1edit.txt", corpus);
     languageModel = lm;
   }
 
@@ -105,29 +105,29 @@ public class SpellCorrect {
 
 
   public static void eval() {
-    String trainPath = "data/holbrook-tagged-train.dat";
+    String trainPath = "src/data/holbrook-tagged-train.dat";
     HolbrookCorpus trainingCorpus = new HolbrookCorpus(trainPath);
 
-    String devPath = "data/holbrook-tagged-dev.dat";
+    String devPath = "src/data/holbrook-tagged-dev.dat";
     HolbrookCorpus devCorpus = new HolbrookCorpus(devPath);
 
-    System.out.println("Uniform Language Model: ");
-    UniformLanguageModel uniformLM = new UniformLanguageModel(trainingCorpus);
-    SpellCorrect uniformSpell = new SpellCorrect(uniformLM, trainingCorpus); 
-    SpellingResult uniformOutcome = uniformSpell.evaluate(devCorpus);
-    System.out.println(uniformOutcome.toString());
+//    System.out.println("Uniform Language Model: ");
+//    UniformLanguageModel uniformLM = new UniformLanguageModel(trainingCorpus);
+//    SpellCorrect uniformSpell = new SpellCorrect(uniformLM, trainingCorpus);
+//    SpellingResult uniformOutcome = uniformSpell.evaluate(devCorpus);
+//    System.out.println(uniformOutcome.toString());
+//
+//    System.out.println("Laplace Unigram Language Model: ");
+//    LaplaceUnigramLanguageModel laplaceUnigramLM = new LaplaceUnigramLanguageModel(trainingCorpus);
+//    SpellCorrect laplaceUnigramSpell = new SpellCorrect(laplaceUnigramLM, trainingCorpus);
+//    SpellingResult laplaceUnigramOutcome = laplaceUnigramSpell.evaluate(devCorpus);
+//    System.out.println(laplaceUnigramOutcome.toString());
 
-    System.out.println("Laplace Unigram Language Model: ");
-    LaplaceUnigramLanguageModel laplaceUnigramLM = new LaplaceUnigramLanguageModel(trainingCorpus);
-    SpellCorrect laplaceUnigramSpell = new SpellCorrect(laplaceUnigramLM, trainingCorpus);
-    SpellingResult laplaceUnigramOutcome = laplaceUnigramSpell.evaluate(devCorpus);
-    System.out.println(laplaceUnigramOutcome.toString());
-
-    System.out.println("Laplace Bigram Language Model: ");
-    LaplaceBigramLanguageModel laplaceBigramLM = new LaplaceBigramLanguageModel(trainingCorpus);
-    SpellCorrect laplaceBigramSpell = new SpellCorrect(laplaceBigramLM, trainingCorpus);
-    SpellingResult laplaceBigramOutcome = laplaceBigramSpell.evaluate(devCorpus);
-    System.out.println(laplaceBigramOutcome.toString());
+//    System.out.println("Laplace Bigram Language Model: ");
+//    LaplaceBigramLanguageModel laplaceBigramLM = new LaplaceBigramLanguageModel(trainingCorpus);
+//    SpellCorrect laplaceBigramSpell = new SpellCorrect(laplaceBigramLM, trainingCorpus);
+//    SpellingResult laplaceBigramOutcome = laplaceBigramSpell.evaluate(devCorpus);
+//    System.out.println(laplaceBigramOutcome.toString());
 
     System.out.println("Stupid Backoff Language Model: ");
     StupidBackoffLanguageModel sbLM = new StupidBackoffLanguageModel(trainingCorpus);
