@@ -121,7 +121,7 @@ public class Submit {
 
   // return either accuracy or the answer list.
   protected String output(int partId, String ch_aux) {
-    String trainPath = "data/imdb1/";
+    String trainPath = "src/data/imdb1/";
 
     if(partId == 1) { // train splits, all words return null;
       NaiveBayes nb = new NaiveBayes();

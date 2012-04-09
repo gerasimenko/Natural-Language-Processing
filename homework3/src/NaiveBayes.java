@@ -19,6 +19,40 @@ public class NaiveBayes {
     public static boolean FILTER_STOP_WORDS = false; // this gets set in main()
     private static List<String> stopList = readFile(new File("src/data/english.stop"));
 
+    private int documentsCount;
+    private Map<String, Integer> classCount = new HashMap<String, Integer>();
+    private Map<String, Integer> wordsCount = new HashMap<String, Integer>();
+    private Map<String, Map<String, Integer>> classWordCount = new HashMap<String, Map<String, Integer>>();
+    private Set<String> vocabulary = new HashSet<String>();
+
+    private void addDocument(String documentClass) {
+        documentsCount++;
+        Integer count = classCount.get(documentClass);
+        if (count == null) count = 0;
+        classCount.put(documentClass, count + 1);
+    }
+
+    private void addWord(String documentClass, String word) {
+        Integer count = wordsCount.get(documentClass);
+        if (count == null) count = 0;
+        wordsCount.put(documentClass, count + 1);
+
+        if (!classWordCount.containsKey(documentClass)) {
+            classWordCount.put(documentClass, new HashMap<String, Integer>());
+        }
+        count = classWordCount.get(documentClass).get(word);
+        if (count == null) count = 0;
+        classWordCount.get(documentClass).put(word, count + 1);
+
+        vocabulary.add(word);
+
+    }
+
+    private Integer getWordCount(String documentClass, String word) {
+        Integer count = classWordCount.get(documentClass).get(word);
+        if (count == null) count = 0;
+        return count;
+    }
 
     //TODO
 
@@ -26,7 +60,10 @@ public class NaiveBayes {
      * Put your code for adding information to your NB classifier here
      */
     public void addExample(String klass, List<String> words) {
-
+        addDocument(klass);
+        for(String word : words) {
+            addWord(klass, word);
+        }
     }
 
     //TODO
@@ -36,7 +73,22 @@ public class NaiveBayes {
      * Currently, it just randomly chooses "pos" or "negative"
      */
     public String classify(List<String> words) {
-        if (new Random().nextDouble() < 0.5) {
+        double pos = 0, neg = 0;
+
+
+        pos += Math.log(classCount.get("pos") / (0.0 + documentsCount));
+        for(String word : words) {
+//            pos += Math.log((getWordCount("pos", word) + 1.0) / (wordsCount.get("pos") + classWordCount.get("pos").size()));
+            pos += Math.log((getWordCount("pos", word) + 1.0) / (wordsCount.get("pos") + vocabulary.size()));
+        }
+        neg += Math.log(classCount.get("neg") / (0.0 + documentsCount));
+        for(String word : words) {
+//            neg += Math.log((getWordCount("neg", word) + 1.0) / (wordsCount.get("neg") + classWordCount.get("neg").size()));
+            neg += Math.log((getWordCount("neg", word) + 1.0) / (wordsCount.get("neg") + vocabulary.size()));
+        }
+
+
+        if (pos > neg) {
             return "pos";
         } else {
             return "neg";
